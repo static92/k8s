@@ -2,7 +2,6 @@ apiVersion: "acid.zalan.do/v1"
 kind: postgresql
 metadata:
   name: prod-postgres-cluster
-  namespace: databases
 spec:
   # Production basics
   teamId: "platform"
