@@ -34,7 +34,7 @@ spec:
   enableConnectionPooler: true
   connectionPooler:
     mode: "transaction"          # Best for most apps
-    numberOfInstances: 2         # HA pooler
+    numberOfInstances: 1         # HA pooler
     resources:
       requests:
         cpu: 200m
@@ -48,7 +48,7 @@ spec:
     user: "pooler"
     parameters:
       max_client_conn: "5000"
-      default_pool_size: "50"
+      default_pool_size: "70"
       reserve_pool_size: "10"
       max_db_connections: "100"
   
