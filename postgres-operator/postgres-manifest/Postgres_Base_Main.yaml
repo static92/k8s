@@ -12,19 +12,19 @@ spec:
   
   # Database users
   users:
-    appuser:           # App connection user
-      - "login"
-      - "createdb"
-    backupuser:        # Backup user
-      - "login"
+#    appuser:           # App connection user
+#      - "login"
+#      - "createdb"
+#    backupuser:        # Backup user
+#      - "login"
     pooler:            # PgBouncer auth user (auto-created)
       - "superuser"
       - "replication"
   
   # Databases
-  databases:
-    production_db: appuser    # dbname: owner
-    backup_db: backupuser
+#  databases:
+#    production_db: appuser    # dbname: owner
+#    backup_db: backupuser
   
   # PostgreSQL config
   postgresql:
