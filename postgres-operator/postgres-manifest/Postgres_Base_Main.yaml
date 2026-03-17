@@ -1,0 +1,69 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: prod-postgres-cluster
+  namespace: databases
+spec:
+  # Production basics
+  teamId: "platform"
+  volume:
+    size: 50Gi
+    storageClass: local-hostpath # Your Longhorn storage!
+  numberOfInstances: 3
+  
+  # Database users
+  users:
+    appuser:           # App connection user
+      - "login"
+      - "createdb"
+    backupuser:        # Backup user
+      - "login"
+    pooler:            # PgBouncer auth user (auto-created)
+      - "superuser"
+      - "replication"
+  
+  # Databases
+  databases:
+    production_db: appuser    # dbname: owner
+    backup_db: backupuser
+  
+  # PostgreSQL config
+  postgresql:
+    version: "16"
+  
+  # GOLDEN: PgBouncer connection pooler
+  enableConnectionPooler: true
+  connectionPooler:
+    mode: "transaction"          # Best for most apps
+    numberOfInstances: 2         # HA pooler
+    resources:
+      requests:
+        cpu: 200m
+        memory: 256Mi
+      limits:
+        cpu: "1"
+        memory: 512Mi
+    
+    # Pooler-specific settings
+    schema: "pooler"
+    user: "pooler"
+    parameters:
+      max_client_conn: "5000"
+      default_pool_size: "50"
+      reserve_pool_size: "10"
+      max_db_connections: "100"
+  
+  # External LoadBalancer access (optional)
+  enableMasterLoadBalancer: true
+  enableReplicaLoadBalancer: true
+  allowedSourceRanges:
+    - "0.0.0.0/0"  # Restrict in prod
+  
+  # Production resources
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "2Gi"
+    limits:
+      cpu: "2000m"
+      memory: "4Gi"
