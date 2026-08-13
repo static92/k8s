@@ -3,6 +3,8 @@ kind: Elasticsearch
 metadata:
   name: elastic
   namespace: elastic-system
+  annotations:
+    argocd.argoproj.io/ignore-health: "true"  
 spec:
   version: 9.5.0
   nodeSets:
