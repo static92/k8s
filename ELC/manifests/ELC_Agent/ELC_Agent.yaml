@@ -51,7 +51,6 @@ roleRef:
   kind: ClusterRole
   name: elastic-agent
   apiGroup: rbac.authorization.k8s.io
-
 ---
 apiVersion: agent.k8s.elastic.co/v1alpha1
 kind: Agent
