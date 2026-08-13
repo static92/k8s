@@ -4,7 +4,7 @@ metadata:
   name: elastic
   namespace: elastic-system
   annotations:
-    argocd.argoproj.io/ignore-health: "true"  
+    argocd.argoproj.io/ignore-healthcheck: "true"
 spec:
   version: 9.5.0
   nodeSets:
