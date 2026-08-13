@@ -12,7 +12,6 @@ spec:
       # official roles
       node.roles:  ["master", "data_content", "data_hot", "ingest"]
       node.store.allow_mmap: true
-      index.number_of_replicas: 0
     podTemplate:
       spec:
         containers:
