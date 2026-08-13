@@ -12,16 +12,17 @@ spec:
       # official roles
       node.roles:  ["master", "data_content", "data_hot", "ingest"]
       node.store.allow_mmap: true
+      index.number_of_replicas: 0
     podTemplate:
       spec:
         containers:
         - name: elasticsearch
           resources:
             requests:
-              memory: 500Mi
+              memory: 100Mi
               cpu: 0.5
             limits:
-              memory: 2Gi
+              memory: 1Gi
               cpu: 2
     volumeClaimTemplates:
     - metadata:
