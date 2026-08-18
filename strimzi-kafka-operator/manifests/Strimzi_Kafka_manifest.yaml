@@ -1,4 +1,45 @@
 apiVersion: kafka.strimzi.io/v1
+kind: KafkaNodePool
+metadata:
+  name: kafka-nodes
+  namespace: kafka
+  labels:
+    strimzi.io/cluster: my-cluster
+spec:
+  replicas: 3                
+  roles:
+    - broker
+    - controller
+  storage:                  
+    type: jbod
+    volumes:
+      - id: 0
+        type: persistent-claim
+        size: 100Gi
+        class: local-hostpath # storage name
+        deleteClaim: false
+  resources:
+    requests:
+      cpu: "0.5"              
+      memory: 1Gi       
+    limits:
+      cpu: "2"               
+      memory: 2Gi            
+  # Anti-Affinity
+  template:
+    pod:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchExpressions:
+                  - key: strimzi.io/name
+                    operator: In
+                    values:
+                      - my-cluster-kafka # kafra name
+              topologyKey: "kubernetes.io/hostname"
+---
+apiVersion: kafka.strimzi.io/v1
 kind: Kafka
 metadata:
   name: my-cluster
@@ -6,30 +47,7 @@ metadata:
 spec:
   kafka:
     version: 3.9.0             #
-    replicas: 3                
-    
-    resources:
-      requests:
-        cpu: "0.5"              
-        memory: 500Mi       
-      limits:
-        cpu: "2"               
-        memory: 2Gi            
-
-    # Anti-Affinity
-    template:
-      pod:
-        affinity:
-          podAntiAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              - labelSelector:
-                  matchExpressions:
-                    - key: strimzi.io/name
-                      operator: In
-                      values:
-                        - my-cluster-kafka # kafra name
-                topologyKey: "kubernetes.io/hostname"
-
+    metadataVersion: 3.9-IV0
     listeners:
       - name: plain            
         port: 9092
@@ -42,45 +60,5 @@ spec:
       transaction.state.log.min.isr: 2
       default.replication.factor: 3
       min.insync.replicas: 2
-    storage:                  
-      type: jbod
-      volumes:
-        - id: 0
-          type: persistent-claim
-          size: 100Gi
-          class: local-hostpath # storage name
-          deleteClaim: false
 
-  # Node-сщтекщддук KRaft
-  kraft:
-    replicas: 3
-    
-    # controller resouce
-    resources:
-      requests:
-        cpu: "500m"
-        memory: 1Gi
-      limits:
-        cpu: "1"
-        memory: 1Gi
-
-    # Anti-Affinity for controller
-    template:
-      pod:
-        affinity:
-          podAntiAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              - labelSelector:
-                  matchExpressions:
-                    - key: strimzi.io/name
-                      operator: In
-                      values:
-                        - my-cluster-connectors # controller name
-                topologyKey: "kubernetes.io/hostname"
-
-    storage:
-      type: persistent-claim
-      size: 20Gi
-      class: standard
-      deleteClaim: false
 
