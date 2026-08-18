@@ -2,8 +2,9 @@ apiVersion: kafka.strimzi.io/v1
 kind: KafkaNodePool
 metadata:
   name: kafka-nodes
+  namespace: kafka-operator #
   labels:
-    strimzi.io/cluster: my-cluster # link
+    strimzi.io/cluster: my-cluster
 spec:
   replicas: 3                
   roles:
@@ -35,17 +36,18 @@ spec:
                   - key: strimzi.io/name
                     operator: In
                     values:
-                      - my-cluster-kafka-nodes # ИСПРАВЛЕНО: имя_кластера-имя_пула для точного матчинга
+                      - my-cluster-kafka-nodes # kafra name
               topologyKey: "kubernetes.io/hostname"
 ---
 apiVersion: kafka.strimzi.io/v1
 kind: Kafka
 metadata:
   name: my-cluster
+  namespace: kafka-operator #
 spec:
   kafka:
-    version: 3.9.0             #
-    metadataVersion: 3.9-IV0
+    version: 4.3.0             
+    metadataVersion: 4.3-IV0  
     listeners:
       - name: plain            
         port: 9092
@@ -58,6 +60,7 @@ spec:
       transaction.state.log.min.isr: 2
       default.replication.factor: 3
       min.insync.replicas: 2
+
 
 
 
