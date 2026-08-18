@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: haproxy-deployment
+  namespace: default
+  labels:
+    app: haproxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: haproxy
+  template:
+    metadata:
+      labels:
+        app: haproxy
+    spec:
+      containers:
+      - name: haproxy
+        image: haproxy:2.8-alpine
+        ports:
+        - containerPort: 8080
+          name: http
+        volumeMounts:
+        - name: config-volume
+          mountPath: /usr/local/etc/haproxy/haproxy.cfg
+          subPath: haproxy.cfg
+      volumes:
+      - name: config-volume
+        configMap:
+          name: haproxy-config
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: haproxy-service
+  namespace: default
+spec:
+  type: ClusterIP
+  selector:
+    app: haproxy 
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80         # extarnal port
+      targetPort: 8080 # haproxy
