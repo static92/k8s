@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: 'https://github.com/static92/k8s.git'
     targetRevision: main
-    path: core/local-static-provisioner # local path
+    path: Core/local-static-provisioner # local path
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: kube-system
