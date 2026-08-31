@@ -12,7 +12,7 @@ spec:
     targetRevision: main
     path: k8s/core/ingress-nginx # local path
   destination:
-    server: 'https://default.svc'
+    server: 'https://kubernetes.default.svc'
     namespace: ingress-nginx
   syncPolicy:
     createNamespace: true
