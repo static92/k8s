@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: 'https://github.com/static92/k8s.git'
     targetRevision: main
-    path: k8s/core/metallb # local path
+    path: core/metallb # local path
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: metallb-system
