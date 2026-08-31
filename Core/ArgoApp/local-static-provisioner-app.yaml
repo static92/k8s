@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: local-static-provisioner
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "3" # third
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/static92/k8s.git'
+    targetRevision: main
+    path: k8s/core/local-static-provisioner # local path
+  destination:
+    server: 'https://default.svc'
+    namespace: kube-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

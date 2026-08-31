@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2" # second
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/static92/k8s.git'
+    targetRevision: main
+    path: k8s/core/cert-manager # local path
+  destination:
+    server: 'https://default.svc'
+    namespace: cert-manager
+  syncPolicy:
+    createNamespace: true
+    automated:
+      prune: true
+      selfHeal: true
