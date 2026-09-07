@@ -6,7 +6,7 @@ spec:
   # Production basics
   teamId: "platform"
   volume:
-    size: 50Gi
+    size: 5Gi
     storageClass: local-fast-storage # Your Longhorn storage!
   numberOfInstances: 3
   
