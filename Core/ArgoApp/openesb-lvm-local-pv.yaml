@@ -4,7 +4,7 @@ metadata:
   name: openebs
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "1" # first in row
+    argocd.argoproj.io/sync-wave: "3" # first in row
 spec:
   project: default
   source:
