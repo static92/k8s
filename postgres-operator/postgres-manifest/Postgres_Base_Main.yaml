@@ -7,7 +7,7 @@ spec:
   teamId: "platform"
   volume:
     size: 50Gi
-    storageClass: local-hostpath # Your Longhorn storage!
+    storageClass: local-fast-storage # Your Longhorn storage!
   numberOfInstances: 3
   
   # Database users
