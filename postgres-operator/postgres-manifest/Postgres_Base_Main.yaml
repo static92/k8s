@@ -7,7 +7,7 @@ spec:
   teamId: "platform"
   volume:
     size: 50Gi
-    storageClass: local-fast-storage # Your Longhorn storage!
+    storageClass: openebs-lvmpv # Your Longhorn storage!
   numberOfInstances: 3
   
   # Database users
