@@ -1,4 +1,11 @@
 # changes
+#zfs-localpv:
+#  crds:
+#    zfsLocalPv:
+#      enabled: false
+#    csi:
+#      volumeSnapshots:
+#        enabled: false
 #engines:
 #  local:
 #    lvm:
@@ -57,7 +64,7 @@ localpv-provisioner:
 zfs-localpv:
   crds:
     zfsLocalPv:
-      enabled: true
+      enabled: false
     csi:
       volumeSnapshots:
         enabled: false
