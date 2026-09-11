@@ -9,6 +9,14 @@
 #      core: static92.com 
 #externalURL: https://static92.com
 
+#    jobservice:
+#      jobLog:
+#        existingClaim: ""
+#        storageClass: "local-hostpath"
+#        subPath: ""
+#        accessMode: ReadWriteOnce
+#        size: 1Gi
+#        annotations: {}
 #    database:
 #      existingClaim: ""
 #      storageClass: "local-hostpath"
@@ -32,6 +40,7 @@
 #      annotations: {}
 
  # imageChartStorage:
+ #    type: s3
  #   s3:
  #     region: ru-central1
  #     bucket: harbor
@@ -196,7 +205,7 @@ persistence:
     jobservice:
       jobLog:
         existingClaim: ""
-        storageClass: ""
+        storageClass: "local-hostpath"
         subPath: ""
         accessMode: ReadWriteOnce
         size: 1Gi
@@ -246,7 +255,7 @@ persistence:
     # Specify the type of storage: "filesystem", "azure", "gcs", "s3", "swift",
     # "oss" and fill the information needed in the corresponding section. The type
     # must be "filesystem" if you want to use persistent volumes for registry
-    type: filesystem
+    type: s3
     filesystem:
       rootdirectory: /storage
       #maxthreads: 100
