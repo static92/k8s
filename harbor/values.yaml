@@ -281,8 +281,8 @@ persistence:
       #existingSecret: ""
       region: us-east-1
       bucket: harbor
-      accesskey: oG06C9cAMP11OTpJ17DK
-      secretkey: GPkigtLn8P7CoL2fAhMpWH8OYsTimnjTd0RDM4nm
+      accesskey: d6Xc3gj6xQM0CkAowqeX
+      secretkey: oMD6JO2K6xHfSiEWZcf6EzdN3TpW2a9EZAnS7Bjy
       regionendpoint: http://192.168.0.182:9000
       #encrypt: false
       #keyid: mykeyid
