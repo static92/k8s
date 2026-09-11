@@ -38,6 +38,8 @@
  #     accesskey: oG06C9cAMP11OTpJ17DK
  #     secretkey: GPkigtLn8P7CoL2fAhMpWH8OYsTimnjTd0RDM4nm
  #     regionendpoint: http://192.168.0.182:9000
+
+ #harborAdminPassword: "Harbor12345"
 expose:
   # Set how to expose the service. Set the type as "ingress", "clusterIP", "nodePort", "loadBalancer" or "route"
   # and fill the information in the corresponding section
