@@ -214,7 +214,7 @@ persistence:
     # be ignored
     redis:
       existingClaim: ""
-      storageClass: "local-hostpath""
+      storageClass: "local-hostpath"
       subPath: ""
       accessMode: ReadWriteOnce
       size: 1Gi
