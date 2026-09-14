@@ -13,30 +13,31 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - static92minio.com
+        - s3.static92minio.com
+        - console.static92minio.com
       secretName: minio-external-tls-secret
   rules:
     # S3 API
-    - host: static92minio.com
+    - host: s3.static92minio.com
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: minio # Стандартное имя сервиса для API, которое создает оператор
+                name: minio 
                 port:
                   number: 9000      
     # Web Console
-    - host: static92minio.com
+    - host: console.static92minio.com
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: my-minio-storage-console # Имя сервиса консоли (формируется как [имя_тенанта]-console)
+                name: my-minio-storage-console 
                 port:
-                  number: 9443 # Порт веб-интерфейса (если включен TLS, иначе 9001)
+                  number: 9443 
 
 
