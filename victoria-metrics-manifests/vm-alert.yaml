@@ -1,4 +1,4 @@
-apiVersion: ://victoriametrics.com
+apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMAlert
 metadata:
   name: vm-alert-prod

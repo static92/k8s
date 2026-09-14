@@ -47,7 +47,7 @@ rules:
   - nonResourceURLs: ["/metrics", "/metrics/cadvisor"]
     verbs: ["get"]
 ---
-apiVersion: ://victoriametrics.com
+apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMNodeScrape
 metadata:
   name: kubernetes-kubelet-scrape
