@@ -31,18 +31,17 @@ spec:
       value: "xforwarded"
     - name: log-level
       value: "info"
-    - name: metrics-enabled # Включаем метрики для Prometheus
+    - name: metrics-enabled
       value: "true"
 
-  # Кастомизация подов (лимиты ресурсов) через встроенный шаблон
   podTemplate:
     spec:
       containers:
         - name: keycloak
           resources:
             requests:
-              cpu: "500m"
-              memory: "1Gi"
+              cpu: "50m"
+              memory: "100Mi"
             limits:
-              cpu: "2"
+              cpu: "1"
               memory: "2Gi"
