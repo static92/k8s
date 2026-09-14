@@ -1,0 +1,77 @@
+apiVersion: ://victoriametrics.com
+kind: VMCluster
+metadata:
+  name: vm-cluster-prod
+  namespace: victoria-metrics
+spec:
+  # Каждая метрика пишется в 2 разные ноды vmstorage из 3 доступных
+  replicationFactor: 2
+  retentionPeriod: "3" # Храним метрики, например, 3 месяца
+
+  # ----------------------------------------------------
+  # 1. Слой приема метрик ( stateless, масштабируется легко )
+  # ----------------------------------------------------
+  vminsert:
+    replicaCount: 2
+    resources:
+      limits:
+        cpu: "1"
+        memory: "1Gi"
+      requests:
+        cpu: "500m"
+        memory: "512Mi"
+
+  # ----------------------------------------------------
+  # 2. Слой чтения метрик ( stateless, дедуплицирует данные )
+  # ----------------------------------------------------
+  vmselect:
+    replicaCount: 2
+    cacheMountPath: "/select-cache"
+    extraArgs:
+      dedup.minScrapeInterval: "1ms" # Склеивает реплицированные данные при выдаче в Grafana
+    resources:
+      limits:
+        cpu: "1"
+        memory: "1Gi"
+      requests:
+        cpu: "500m"
+        memory: "512Mi"
+
+  # ----------------------------------------------------
+  # 3. Слой хранения ( stateful, привязан к локальным дискам )
+  # ----------------------------------------------------
+  vmstorage:
+    replicaCount: 3 # Ровно 3 ноды
+    storageDataPath: "/vm-data"
+    
+    # Ресурсы на одну ноду (подстройте под ваши лимиты)
+    resources:
+      limits:
+        cpu: "2"
+        memory: "4Gi"
+      requests:
+        cpu: "1"
+        memory: "2Gi"
+
+    # ЖЕСТКОЕ РАЗНЕСЕНИЕ ПОДОВ ПО РАЗНЫМ НОДАМ КЛАСТЕРА
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - vmstorage
+            topologyKey: "kubernetes.io/hostname" # Запрещает запускать >1 пода vmstorage на одной ноде
+
+    # Привязка к локальным Persistent Volumes
+    storage:
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          storageClassName: "local-storage" # Ваша локальная storage class
+          resources:
+            requests:
+              storage: 100Gi # Объем диска на каждую из 3-х нод
