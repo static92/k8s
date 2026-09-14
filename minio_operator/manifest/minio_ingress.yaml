@@ -1,0 +1,42 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: minio-ingress
+  namespace: minio
+  annotations:
+
+    nginx.ingress.kubernetes.io/proxy-body-size: "0" # allow any size files
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600" # timeout for big files
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"  
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - static92minio.com
+      secretName: minio-external-tls-secret
+  rules:
+    # S3 API
+    - host: static92minio.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: minio # Стандартное имя сервиса для API, которое создает оператор
+                port:
+                  number: 9000      
+    # Web Console
+    - host: static92minio.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: my-minio-storage-console # Имя сервиса консоли (формируется как [имя_тенанта]-console)
+                port:
+                  number: 9443 # Порт веб-интерфейса (если включен TLS, иначе 9001)
+
+
