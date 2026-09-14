@@ -27,6 +27,10 @@ spec:
     admin: https://static92.com # domain for admin
 
   additionalOptions:
+    - name: bootstrap-admin-username
+      value: "admin"
+    - name: bootstrap-admin-password
+      value: "MySuperSecurePassword123"  
     - name: proxy-headers
       value: "xforwarded"
     - name: log-level
