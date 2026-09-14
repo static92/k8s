@@ -23,8 +23,8 @@ spec:
     httpPort: 8080
 
   hostname:
-    hostname: static92.com # domain for client
-    admin: static92.com # domain for admin
+    hostname: https://static92.com # domain for client
+    admin: https://static92.com # domain for admin
 
   additionalOptions:
     - name: proxy-headers
