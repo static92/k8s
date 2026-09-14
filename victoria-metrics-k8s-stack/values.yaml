@@ -1,4 +1,7 @@
 # CHANGES
+# nameOverride: "vm-stack"
+# # -- Resource full name override
+# fullnameOverride: "vm-stack"
 # vmsingle:
 #   # -- VMSingle annotations
 #   annotations: {}
@@ -142,9 +145,9 @@ global:
     dnsDomain: cluster.local.
 
 # -- Override chart name
-nameOverride: ""
+nameOverride: "vm-stack"
 # -- Resource full name override
-fullnameOverride: ""
+fullnameOverride: "vm-stack"
 # -- Tenant to use for Grafana datasources and remote write
 tenant: "0"
 # -- If this chart is used in "Argocd" with "releaseName" field then
