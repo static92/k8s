@@ -45,7 +45,7 @@ spec:
   replicaCount: 1
   
   remoteWrite:
-    - url: "http://vmsingle-vm-database:8428" # vm base
+    - url: "http://vmsingle-vm-database:8428/api/v1/write" # vm base
 
   # scrape all
   serviceScrapeSelector: {}
