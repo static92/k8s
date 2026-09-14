@@ -1,4 +1,4 @@
-apiVersion: ://victoriametrics.com
+apiVersion: operator.victoriametrics.com/v1beta1
 kind: VMCluster
 metadata:
   name: vm-cluster-prod
