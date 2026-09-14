@@ -4,13 +4,12 @@ metadata:
   name: minio-ingress
   namespace: minio
   annotations:
-
     nginx.ingress.kubernetes.io/proxy-body-size: "0" # allow any size files
     nginx.ingress.kubernetes.io/proxy-read-timeout: "600" # timeout for big files
     nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"  
 spec:
-  ingressClassName: nginx
+  ingressClassName: public
   tls:
     - hosts:
         - s3.static92minio.com
