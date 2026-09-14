@@ -1,0 +1,48 @@
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: Keycloak
+metadata:
+  name: main-keycloak
+  namespace: keycloak
+spec:
+  instances: 1 # replica count
+  
+  db:
+    vendor: postgres
+    host: postgres-db.keycloak.svc.cluster.local # db adress
+    database: keycloak
+    port: 5432
+    usernameSecret:
+      name: keycloak-db-secret
+      key: username
+    passwordSecret:
+      name: keycloak-db-secret
+      key: password
+
+  http:
+    httpEnabled: true 
+    httpPort: 8080
+
+  hostname:
+    hostname: static92.com # domain for client
+    admin: static92.com # domain for admin
+
+  additionalOptions:
+    - name: proxy-headers
+      value: "xforwarded"
+    - name: log-level
+      value: "info"
+    - name: metrics-enabled # Включаем метрики для Prometheus
+      value: "true"
+
+  # Кастомизация подов (лимиты ресурсов) через встроенный шаблон
+  podTemplate:
+    spec:
+      containers:
+        - name: keycloak
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "1Gi"
+            limits:
+              cpu: "2"
+              memory: "2Gi"
