@@ -1,0 +1,14 @@
+apiVersion: ://victoriametrics.com
+kind: VMAlert
+metadata:
+  name: vm-alert-prod
+  namespace: victoria-metrics
+spec:
+  replicaCount: 1
+  datasourceURL: "http://vmsingle-vm-database:8428" # vm base
+  
+  ruleSelector: {}
+  
+  resources:
+    limits: { cpu: "500m", memory: "512Mi" }
+    requests: { cpu: "100m", memory: "256Mi" }
